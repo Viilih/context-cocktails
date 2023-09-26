@@ -25,7 +25,7 @@ export type CocktailProps = {
 type CocktailContextProps = {
   cocktails: CocktailProps[];
   isLoading: boolean;
-  fetchDrink: any;
+  getDrinkByName: (drinkName: string) => Promise<void>;
   initialCocktails: () => Promise<void>;
 };
 
@@ -38,7 +38,7 @@ const CocktailProvider = ({ children }: IProps) => {
   const [cocktails, setCocktails] = useState<CocktailProps[]>([]);
   const [searchItem, setSearchItem] = useState(null);
 
-  const fetchDrink = useCallback(async (drinkName: string) => {
+  const getDrinkByName = useCallback(async (drinkName: string) => {
     try {
       const response = await fetch(`${SEARCH_DRINK_BY_NAME}${drinkName}`);
       const data = await response.json();
@@ -49,7 +49,6 @@ const CocktailProvider = ({ children }: IProps) => {
     }
   }, []);
 
-  console.log(cocktails);
   const initialCocktails = useCallback(async () => {
     try {
       const response = await fetch(`${SEARCH_DRINK_BY_FIRST_LETTER}a`);
@@ -63,12 +62,12 @@ const CocktailProvider = ({ children }: IProps) => {
 
   const contextValues = useMemo(
     () => ({
-      fetchDrink,
+      getDrinkByName,
       initialCocktails,
       cocktails,
       isLoading,
     }),
-    [fetchDrink, initialCocktails, cocktails, isLoading]
+    [getDrinkByName, initialCocktails, cocktails, isLoading]
   );
   return (
     <CocktailContext.Provider value={contextValues}>
