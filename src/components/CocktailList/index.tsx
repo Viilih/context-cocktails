@@ -7,22 +7,25 @@ export const CocktailList = () => {
 
   // Chame fetchDrink automaticamente na primeira renderização
   useEffect(() => {
-    initialCocktails("a"); // Ou o nome do coquetel que deseja buscar inicialmente
-  }, []);
+    initialCocktails(); // Ou o nome do coquetel que deseja buscar inicialmente
+  }, [initialCocktails]);
 
   // console.log(cocktails);
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center gap-10">
       <button onClick={() => fetchDrink("Negroni")}>
         Buscar outro coquetel
       </button>
-      <ul>
+      <ul className="flex gap-7 flex-wrap items-center justify-center">
         {cocktails?.length > 0 &&
           cocktails.map((item) => (
             <li key={item.idDrink}>
               <CocktailCard
                 drinkName={item.strDrink}
                 imgUrl={item.strDrinkThumb}
+                drinkCategory={item.strCategory}
+                drinkGlass={item.strGlass}
+                id={item.idDrink}
               />
             </li>
           ))}

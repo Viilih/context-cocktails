@@ -1,30 +1,46 @@
+import { Link } from "react-router-dom";
+
 interface CocktailCardProps {
   drinkName: string;
   imgUrl: string;
+  drinkCategory: string;
+  drinkGlass: string;
+  id: number;
 }
-export const CocktailCard = ({ drinkName, imgUrl }: CocktailCardProps) => {
+export const CocktailCard = ({
+  drinkName,
+  imgUrl,
+  drinkCategory,
+  drinkGlass,
+  id,
+}: CocktailCardProps) => {
+  const handleNavigateToSingleCocktail = () => {};
+
   return (
     <>
-      <div className="max-w-sm rounded overflow-hidden shadow-lg">
-        <img className="w-full" src={imgUrl} alt="Sunset in the mountains" />
-        <div className="px-6 py-4">
+      <div className="max-w-xs rounded overflow-hidden shadow-lg  transform transition duration-500 hover:bg-gray-300">
+        <img
+          className="w-full h-80"
+          src={imgUrl}
+          alt="Sunset in the mountains"
+        />
+        <div className="px-6 ">
           <div className="font-bold text-xl mb-2">{drinkName}</div>
-          <p className="text-gray-700 text-base">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Voluptatibus quia, nulla! Maiores et perferendis eaque,
-            exercitationem praesentium nihil.
-          </p>
         </div>
-        <div className="px-6 pt-4 pb-2">
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-            #photography
-          </span>
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-            #travel
-          </span>
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-            #winter
-          </span>
+        <div className="px-5 pb-2 flex flex-col">
+          <div>
+            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+              {drinkCategory}
+            </span>
+            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+              {drinkGlass}
+            </span>
+          </div>
+          <Link to={`/cocktail/${id}`}>
+            <button className="cursor-pointer px-2 py-1 rounded bg-blue-500 text-slate-100">
+              Details
+            </button>
+          </Link>
         </div>
       </div>
     </>

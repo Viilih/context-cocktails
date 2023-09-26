@@ -6,7 +6,10 @@ import {
   useCallback,
   useMemo,
 } from "react";
-import { SEARCH_DRINK_BY_NAME, SEARCH_BY_FIRST_LETTER } from "../../api/url";
+import {
+  SEARCH_DRINK_BY_NAME,
+  SEARCH_DRINK_BY_FIRST_LETTER,
+} from "../../api/url";
 interface IProps {
   children: ReactNode;
 }
@@ -15,13 +18,15 @@ export type CocktailProps = {
   strDrink: string;
   idDrink: number;
   strDrinkThumb: string;
+  strGlass: string;
+  strCategory: string;
 };
 
 type CocktailContextProps = {
   cocktails: CocktailProps[];
   isLoading: boolean;
   fetchDrink: any;
-  initialCocktails: (letter: string) => Promise<void>;
+  initialCocktails: () => Promise<void>;
 };
 
 const CocktailContext = createContext<CocktailContextProps>(
@@ -44,9 +49,10 @@ const CocktailProvider = ({ children }: IProps) => {
     }
   }, []);
 
+  console.log(cocktails);
   const initialCocktails = useCallback(async () => {
     try {
-      const response = await fetch(`${SEARCH_BY_FIRST_LETTER}a`);
+      const response = await fetch(`${SEARCH_DRINK_BY_FIRST_LETTER}a`);
       const data = await response.json();
       const { drinks } = data;
       setCocktails(drinks);
